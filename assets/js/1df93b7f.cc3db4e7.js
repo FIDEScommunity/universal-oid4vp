@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[583],{6107:(n,u,e)=>{e.r(u),e.d(u,{default:()=>s});var t=e(6540),o=e(6347);function s(){const n=(0,o.W6)();return(0,t.useEffect)((()=>{n.push("/universal-oid4vp/docs/universal-oid4vp-introduction")}),[n]),null}}}]);
