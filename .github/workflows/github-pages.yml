@@ -56,7 +56,8 @@ jobs:
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/FIDEScommunity/universal-oid4vp.git
 
       # Step 6: Deploy Docusaurus using npx and GITHUB_TOKEN
-      - name: Deploy Docusaurus using npx and GITHUB_TOKEN
+      - name: Deploy Docusaurus using npm and GITHUB_TOKEN
+        working-directory: documentation
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
@@ -64,5 +65,6 @@ jobs:
           npm run deploy || (echo "🔴 Docusaurus deploy failed. Showing npm log:" && cat /home/runner/.npm/_logs/* && exit 1)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 
