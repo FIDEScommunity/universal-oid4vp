@@ -64,6 +64,11 @@ jobs:
         working-directory: documentation
         run: npm ci
 
+      # Step 5.7: Force clean build output (to fix stale route cache)
+      - name: Clean Docusaurus build and output folders
+        working-directory: documentation
+        run: rm -rf .docusaurus build
+
       # Step 6: Deploy Docusaurus using npx and GITHUB_TOKEN
       - name: Deploy Docusaurus using npm and GITHUB_TOKEN
         working-directory: documentation
