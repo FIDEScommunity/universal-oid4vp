@@ -55,7 +55,11 @@ jobs:
         run: |
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/FIDEScommunity/universal-oid4vp.git
 
-      # Step 5.6: Install Node dependencies
+      # Step 5.6: Clean and install
+      - name: Clean Docusaurus cache
+        working-directory: documentation
+        run: rm -rf .docusaurus node_modules
+      
       - name: Install dependencies
         working-directory: documentation
         run: npm ci
