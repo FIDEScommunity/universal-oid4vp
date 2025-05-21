@@ -54,8 +54,5 @@ jobs:
       - name: Deploy Docusaurus using Gradle
         run: ./gradlew deployDocusaurus
         env:
-          GIT_USER_NAME: nklomp
-          GIT_USER_EMAIL: nklomp@4sure.tech
-          GIT_USER:  ${{ secrets.GIT_USER }}
-          GIT_PASS: ${{ secrets.GIT_PASS }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
