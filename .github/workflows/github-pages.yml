@@ -55,6 +55,11 @@ jobs:
         run: |
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/FIDEScommunity/universal-oid4vp.git
 
+      # Step 5.6: Install Node dependencies
+      - name: Install dependencies
+        working-directory: documentation
+        run: npm ci
+
       # Step 6: Deploy Docusaurus using npx and GITHUB_TOKEN
       - name: Deploy Docusaurus using npm and GITHUB_TOKEN
         working-directory: documentation
