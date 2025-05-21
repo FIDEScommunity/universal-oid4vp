@@ -1,0 +1,70 @@
+---
+id: universal-oid4vp-introduction
+title: Introduction
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+### *"A simple, universal interface to use digital credentials in real-world websites and mobile apps — fast.”*
+
+## What is the Universal OID4VP API?
+
+The Universal OID4VP API is a simple, standardized interface that makes it easy for websites and native apps to request and verify Verifiable Credentials — using the OpenID for Verifiable Presentations (OID4VP) standard.
+
+## Why is this API needed?
+
+<div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', flexWrap: 'wrap' }}>
+  <div style={{ flex: 1, minWidth: '300px' }}>
+    <p>OID4VP adoption is growing across Europe and beyond. It defines how digital credentials can be requested and presented securely, but:</p>
+    <ul>
+      <li>There is no common way for relying party websites to fetch and use verification templates (e.g. DCQL queries) from organizational wallets (relying party agents).</li>
+      <li>Each organizational wallet provider (relying party agent) implements it slightly differently.</li>
+      <li>Relying party website and app developers must build custom integrations depending on their choice for an organizational wallet provider — increasing time, cost, and fragmentation.</li>
+    </ul>
+    <p>The Universal OID4VP API solves this by offering one consistent integration layer.</p>
+  </div>
+  <div style={{ flex: 1, minWidth: '300px' }}>
+    <img src={useBaseUrl('/img/oid4vp-diagram.png')} alt="OID4VP API Diagram" style={{ maxWidth: '100%' }} />
+  </div>
+</div>
+
+## Key Benefits
+
+- **One integration for all wallets and agents**  
+  Stop building custom code for every organizational wallet. Integrate once, and connect with any organizational wallet/relying party agent that supports the Universal OID4VP API.
+
+- **Plug-and-play for any platform**  
+  Use it in CMSs like WordPress and Drupal, CRM systems like Salesforce, or e-commerce platforms like Shopify and Magento — one shared integration model. The generic open source Wordpress OID4VP plugin is already available. Allowing millions of existing Wordpress websites to start requesting digital credentials by organizational wallets that are compliant with the OID4VP and the Universal OID4VP API.
+
+- **Lightweight integration**  
+  Heavy lifting is done in the organizational wallets/relying party agents. Universal OID4VP API only adds 3 extra calls to the OID4VP specification. Does not require much modifications in organizational wallets/relying party agents. Works with any verifiable credential format (SD-JWT VC, mDOC, VCDM, Anoncred etc) and interop profiles (HAIP, DIIP etc).
+
+- **Faster time to market**  
+  Go live in days instead of weeks. The API hides the complexity of OID4VP and DCQL behind a clean, developer-friendly interface (organizational wallets/relying party websites do the heavy lifting).
+
+- **Works with real-world credential flows**  
+  Supports common use cases like login, onboarding, identity verification, B2B KYC, exchanging trade documents etc — not just theoretical demos.
+
+- **Vendor-neutral and future-proof**  
+  Built around open standards. No vendor lock-in. Designed to evolve with the OID4VP, DCQL and other related specifications.
+
+- **Simple for developers**  
+  Based on OpenAPI. Easy to test, mock, and implement with existing dev tools. Minimal learning curve.
+
+- **Composable architecture**  
+  Cleanly separates credential presentation from business logic — letting you focus on trust UX, not protocol plumbing.
+
+## Who is it for?
+
+- Developers building relying party websites or mobile apps that are requesting digital credentials  
+- Organizational wallet (relying party agent) providers who want to offer standard, plug-and-play integrations  
+- Solution architects aiming to deploy digital credentials at scale  
+- Governments, businesses and trust ecosystems rolling out OID4VP infrastructure  
+- Platforms that want to provide a universal method for requesting digital credentials and integration with organizational wallet/relying party agents
+
+## Learn more
+
+📄 Check the  
+🧩 See  
+💬 Contribute via  
+

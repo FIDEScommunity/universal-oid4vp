@@ -63,8 +63,8 @@ const config: Config = {
             'classic',
             {
                 docs: {
-                    sidebarPath: './sidebars.ts',
-                    docItemComponent: "@theme/ApiItem", // Derived from doc
+                    sidebarPath: require.resolve('./sidebars.ts'),
+//                    docItemComponent: "@theme/ApiItem", // Derived from doc
                 },
                 blog: false,
                 /*blog: {
@@ -95,8 +95,8 @@ const config: Config = {
         navbar: {
             title: 'Universal OID4VP',
             logo: {
-                alt: 'My Site Logo',
-                src: 'img/logo.svg',
+                alt: 'FIDES Community logo',
+                src: 'img/FIDES_LOGO.png',
             },
           /*  items: [
                 {
