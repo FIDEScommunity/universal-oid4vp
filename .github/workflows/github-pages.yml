@@ -8,7 +8,7 @@ on:
   workflow_dispatch: # Allows manual trigger of the workflow in GitHub Actions UI
 
 permissions:
-contents: write
+  contents: write
 
 jobs:
   deploy:
