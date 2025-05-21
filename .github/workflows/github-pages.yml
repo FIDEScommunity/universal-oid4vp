@@ -55,9 +55,14 @@ jobs:
         run: |
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/FIDEScommunity/universal-oid4vp.git
 
-      # Step 6: Run the Gradle task to deploy Docusaurus
-      - name: Deploy Docusaurus using Gradle
-        run: ./gradlew deployDocusaurus
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Step 6: Deploy Docusaurus using npx and GITHUB_TOKEN
+      - name: Deploy Docusaurus using npx and GITHUB_TOKEN
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/FIDEScommunity/universal-oid4vp.git
+        npx docusaurus deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
