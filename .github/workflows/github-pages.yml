@@ -49,6 +49,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle.kts', '**/settings.gradle.kts', '**/gradle.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      
+      # Step 5.5: Set git remote to use GITHUB_TOKEN for authentication
+      - name: Set git remote to use GITHUB_TOKEN
+        run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/FIDEScommunity/universal-oid4vp.git
 
       # Step 6: Run the Gradle task to deploy Docusaurus
       - name: Deploy Docusaurus using Gradle
