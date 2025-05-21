@@ -63,9 +63,11 @@ const config: Config = {
             'classic',
             {
                 docs: {
-                    sidebarPath: require.resolve('./sidebars.ts'),
-//                    docItemComponent: "@theme/ApiItem", // Derived from doc
+                  path: 'documentation/docs',
+                  sidebarPath: require.resolve('./sidebars.ts'),
+                //  docItemComponent: "@theme/ApiItem", // Optional, kun je laten staan of weghalen
                 },
+
                 blog: false,
                 /*blog: {
                     showReadingTime: true,
