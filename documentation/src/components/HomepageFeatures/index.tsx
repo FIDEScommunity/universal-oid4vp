@@ -32,7 +32,7 @@ const FeatureList: FeatureItem[] = [
             <>
                 There are multiple implementations available. <Link
                     // className="button button--secondary button--lg"
-                    to="/docs/universal-oid4vp-introduction">
+                    to="/docs/implementation-examples">
                     Read more
                 </Link>
             </>
