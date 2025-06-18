@@ -16,8 +16,18 @@ const sidebars: SidebarsConfig = {
     docs: [
         {
             type: 'doc',
+            id: 'universal-oid4vp-introduction', // Refers to documentation/docs/universal-oid4vp-introduction.md
+            label: 'Introduction',
+        },
+      /* {
+            type: 'doc',
             id: 'README', // Refers to documentation/docs/readme.md
             label: 'Readme',
+        },*/
+        {
+            type: 'doc',
+            id: 'implementation-examples',
+            label: 'Implementation Examples',
         },
         {
             type: "category",

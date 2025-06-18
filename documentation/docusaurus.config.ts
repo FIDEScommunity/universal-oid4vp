@@ -95,7 +95,7 @@ const config: Config = {
         navbar: {
             title: 'Universal OID4VP',
             logo: {
-                alt: 'My Site Logo',
+                alt: 'Fides logo',
                 src: 'img/logo.svg',
             },
           /*  items: [
@@ -120,8 +120,12 @@ const config: Config = {
                     title: 'Links',
                     items: [
                         {
-                            label: 'Readme',
-                            to: '/docs',
+                            label: 'Intro',
+                            to: '/docs/universal-oid4vp-introduction',
+                        },
+                        {
+                            label: 'Implementations',
+                            to: '/docs/implementation-examples',
                         },
                         {
                             label: 'OpenAPI',
@@ -150,13 +154,13 @@ const config: Config = {
                 {
                     title: 'More',
                     items: [
-                        /*{
-                            label: 'Blog',
-                            to: '/blog',
-                        },*/
+                        {
+                            label: 'Homepage',
+                            to: 'https://fides.community/',
+                        },
                         {
                             label: 'GitHub',
-                            href: 'https://github.com/facebook/docusaurus',
+                            href: 'https://github.com/FIDESCommunity/universal-oid4vp',
                         },
                     ],
                 },
