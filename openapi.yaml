@@ -237,7 +237,7 @@ components:
           type: string
           description: The client id and schema as defined in RFC6749 (client_id) and OID4VP (scheme)
           example: redirect_uri%3Ahttps%3A%2F%2Fexample.com%2Fcb
-        reponse_type:
+        response_type:
           $ref: '#/components/schemas/ResponseType'
         response_mode:
           $ref: '#/components/schemas/ResponseMode'
@@ -266,7 +266,7 @@ components:
         query_id:
           type: string
           description: Identifier for the presentation definition that specifies which credentials are required
-          example: PensionSdJwt
+          example: ExampleSdJwtId
     
     AuthorizationStatusRequest:
       type: object
@@ -279,7 +279,7 @@ components:
         query_id:
           type: string
           description: Identifier for the presentation definition that specifies which credentials are required
-          example: PensionSdJwt
+          example: ExampleSdJwtId
         verified_data:
           $ref: '#/components/schemas/VerifiedDataOpts'
     
@@ -310,7 +310,7 @@ components:
         request_uri:
           type: string
           description: (Deep)link URI that initiates the authentication flow by redirect. The wallet will use this value. Should be part of a redirect, link or QR code. This API requires Auth Request be references only, meaning `request_uri` only and no `request`
-          example: 'openid-vc://?request_uri=https://example.com/siop/definitions/PensionSdJwt/auth-requests/b5cab09e-7c08-42c9-870b-c2b83a2c8acd'
+          example: 'openid-vc://?request_uri=https://example.com/siop/definitions/ExampleSdJwtId/auth-requests/b5cab09e-7c08-42c9-870b-c2b83a2c8acd'
         status_uri:
           type: string
           description: Endpoint URL for checking the status of the authentication request, conforming to this OpenAPI specification
@@ -335,7 +335,7 @@ components:
           $ref: '#/components/schemas/Error'
         query_id:
           description: Identifier for the presentation definition that specifies which credentials are required
-          example: PensionSdJwt
+          example: ExampleSdJwtId
           type: string
         last_updated:
           type: integer
@@ -385,16 +385,27 @@ components:
       properties:
         authorization_response:
           $ref: '#/components/schemas/AuthorizationResponsePayload'
-        vp_token:
+        credential_claims:
           type: array
           items:
-            $ref: '#/components/schemas/VpToken'
-        credential_claims_deserialized:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-          description: All the credentials received deserialized to JSON part of an array. Meaning (SD-)JWTs are represented as JSON object. The same for Mdocs. For the latter different implementers of RP Agents could use different methods unfortunately, so there is no stability guarantee to find certain claims in the exact same spot, or even with the exact same keys between different RP agent implementations!
+            $ref: '#/components/schemas/VerifiedClaimsValue'
+
+    VerifiedClaimsValue:
+      type: object
+      description: Represents a single credential with its claims and type
+      required: [id, type]
+      properties:
+        id:
+          type: string
+          description: The id of the query. Can be a presentation exchange id, a DCQL query or query set Id. Used by the RP to match the credential against the query
+        type:
+          type: string
+          description: The digital credential type. Can be a vct value, or for instance a json-ld type
+        claims:
+          type: object
+          additionalProperties:
+            type: string
+          description: The claims returned and deserialized in the form of a map, where the keys represent the claim names
 
     VpToken:
       oneOf:
