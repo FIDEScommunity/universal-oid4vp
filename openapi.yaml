@@ -213,7 +213,7 @@ components:
           type: string
           description: Identifier for the query (DCQL or PE)
           example: example-dcql-id
-        request_base_uri:
+        request_uri_base:
           type: string
           description: The base URI to be used for request URIs. Defaults to "oidp4vp://". It is mainly useful for web/organizational wallets that have an https:// URI for OID4VP
           example: https://example.wallet.com
