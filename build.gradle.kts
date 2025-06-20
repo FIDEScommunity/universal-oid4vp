@@ -1,17 +1,21 @@
 import com.github.gradle.node.npm.task.NpmTask
 import com.github.gradle.node.npm.task.NpxTask
+import java.net.URL
 
 plugins {
     id("java")
     id("org.openapi.generator") version "7.12.0" // OpenAPI Generator plugin
     id("org.ajoberstar.git-publish") version "5.1.1" // Git publish plugin for GitHub Pages
     id("com.github.node-gradle.node") version "7.1.0"
-
-
 }
 
 group = "community.fides"
 version = "0.1.0-SNAPSHOT"
+
+val swaggerUiVersion = "v5.25.2"
+val swaggerUiZip = layout.buildDirectory.file("swagger-ui.zip")
+val swaggerUiExtractedDir = layout.projectDirectory.dir("documentation/static/swagger")
+
 
 repositories {
     mavenCentral()
@@ -28,16 +32,15 @@ node {
     download.set(true) // Automatically download and use the specified Node.js
 }
 
-
 tasks.test {
     useJUnitPlatform()
 }
 
-
+val openApiPath = "${layout.projectDirectory}/src/main/resources/openapi.yaml"
 
 // Configure a helper function for shared OpenAPI task configuration
 fun configureGeneratorTask(task: org.openapitools.generator.gradle.plugin.tasks.GenerateTask, generatorName: String, outputDir: String, additionalConfigOptions: Map<String, String> = emptyMap()) {
-    task.inputSpec.set("$projectDir/openapi.yaml") // Path to OpenAPI file
+    task.inputSpec.set(openApiPath) // Path to OpenAPI file
     task.generatorName.set(generatorName)        // Set the generator type
     task.outputDir.set(layout.buildDirectory.dir(outputDir).map { it.asFile.absolutePath })
     // Set the output directory using layout.buildDirectory
@@ -63,7 +66,7 @@ fun configureGeneratorTask(task: org.openapitools.generator.gradle.plugin.tasks.
 }
 
 val generateDocumentation by tasks.register<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generateDocumentation") {
-    inputSpec.set("$projectDir/openapi.yaml")
+    inputSpec.set(openApiPath)
     generatorName.set("html2") // Use the HTML2 generator from OpenAPI Generator
     outputDir.set(layout.buildDirectory.dir("generated/docs").map { it.asFile.absolutePath })
     group = "openapi"
@@ -161,7 +164,7 @@ tasks.register<NpmTask>("installDocusaurus") {
 }
 // Task to build the Docusaurus site
 tasks.register<NpmTask>("buildDocusaurus") {
-    dependsOn("generateOpenAPIMdx")
+    dependsOn("generateOpenAPIMdx", "configureSwaggerUI")
     group = "documentation"
     description = "Build the Docusaurus static site"
     args.set(listOf("run", "build"))
@@ -181,7 +184,7 @@ tasks.register<NpxTask>("generateOpenAPIMdx") {
 tasks.register<Copy>("copyReadme") {
     group = "documentation"
     description = "Copy files to the Docusaurus documentation folder"
-    from(file("README.md"), file("LICENSE.md"), file("CONTRIBUTING.md"), file("openapi.yaml")) // the root README.md file
+    from(file("README.md"), file("LICENSE.md"), file("CONTRIBUTING.md"), file(openApiPath)) // the root README.md file
     into(file("documentation/docs")) // Docusaurus docs folder
 //    rename { "README.md"; "readme.md" } // Docusaurus expects lowercase
 }
@@ -192,7 +195,7 @@ tasks.register<NpmTask>("serveDocusaurus") {
     description = "Serve the Docusaurus site locally"
     args.set(listOf("run", "start"))
     workingDir = file("documentation")
-    dependsOn("installDocusaurus")
+    dependsOn("buildDocusaurus")
 }
 
 // Task to deploy to GitHub Pages using gh-pages
@@ -202,4 +205,52 @@ tasks.register<NpmTask>("deployDocusaurus") {
     args.set(listOf("run", "deploy"))
     workingDir = file("documentation")
     dependsOn("buildDocusaurus") // Ensure the site is built before deploying
+}
+
+
+// Download and extract swagger ui
+val downloadSwaggerUi by tasks.registering {
+    group = "openapi"
+    description = "Download Swagger UI zip archive"
+
+    outputs.file(swaggerUiZip)
+
+    doLast {
+        val url = URL("https://github.com/swagger-api/swagger-ui/archive/refs/tags/$swaggerUiVersion.zip")
+        swaggerUiZip.get().asFile.outputStream().use { out ->
+            url.openStream().use { it.copyTo(out) }
+        }
+    }
+}
+
+val extractSwaggerUi = tasks.register<Copy>("extractSwaggerUi") {
+    group = "openapi"
+    description = "Extract Swagger UI and copy to target directory"
+    dependsOn(downloadSwaggerUi)
+
+    val zipTree = zipTree(swaggerUiZip)
+    from(zipTree)
+    into(layout.projectDirectory.dir(swaggerUiExtractedDir.asFile.absolutePath))
+
+    includeEmptyDirs = false
+    eachFile {
+        // Flatten directory structure to keep only the `dist` folder contents
+        val segments = relativePath.segments
+        if (segments.size >= 2 && segments[1] == "dist") {
+            val subPath = segments.drop(2).joinToString("/")
+            path = subPath
+        } else {
+            exclude()
+        }
+    }
+}
+
+tasks.register<Copy>("configureSwaggerUI") {
+    group = "openapi"
+    description = "Configure Swagger UI"
+    dependsOn(extractSwaggerUi)
+
+    // Copy the initializer with correct path and the openapi file into the static/swagger path
+    from(layout.projectDirectory.dir("src/main/resources/swagger-initializer.js"), layout.projectDirectory.dir("src/main/resources/openapi.yaml"))
+    into(layout.projectDirectory.dir(swaggerUiExtractedDir.asFile.absolutePath))
 }
