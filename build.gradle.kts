@@ -12,7 +12,7 @@ plugins {
 group = "community.fides"
 version = "0.1.0-SNAPSHOT"
 
-val swaggerUiVersion = "v5.11.0" // You must specify a real version, "latest" won't work
+val swaggerUiVersion = "v5.25.2"
 val swaggerUiZip = layout.buildDirectory.file("swagger-ui.zip")
 val swaggerUiExtractedDir = layout.projectDirectory.dir("documentation/static/swagger")
 
@@ -195,7 +195,7 @@ tasks.register<NpmTask>("serveDocusaurus") {
     description = "Serve the Docusaurus site locally"
     args.set(listOf("run", "start"))
     workingDir = file("documentation")
-    dependsOn("installDocusaurus")
+    dependsOn("buildDocusaurus")
 }
 
 // Task to deploy to GitHub Pages using gh-pages
@@ -250,6 +250,7 @@ tasks.register<Copy>("configureSwaggerUI") {
     description = "Configure Swagger UI"
     dependsOn(extractSwaggerUi)
 
+    // Copy the initializer with correct path and the openapi file into the static/swagger path
     from(layout.projectDirectory.dir("src/main/resources/swagger-initializer.js"), layout.projectDirectory.dir("src/main/resources/openapi.yaml"))
     into(layout.projectDirectory.dir(swaggerUiExtractedDir.asFile.absolutePath))
 }
