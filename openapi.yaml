@@ -79,47 +79,26 @@ paths:
               responses:
                 "200":
                   description: Notification received by the external service.
-    delete:
-      summary: Remove authorization request state
-      operationId: delete-authorization-request
-      description: Deletes all state associated with an authorization request. Use for cleanup after completion or timeout.
-      tags:
-        - Backend
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteAuthorizationRequestBody'
-      responses:
-        '204':
-          description: Authorization request state removed successfully
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '404':
-          description: Query Id or other param not configured/found on the RP agent side
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Error creating authorization request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
 
-  /oid4vp/backend/auth/status:
-    post:
+
+  /oid4vp/backend/auth/requests/{correlation_id}:
+    parameters:
+      - in: path
+        name: correlation_id
+        schema:
+          type: string
+        required: true
+        description: The correlation_id as returned from the CreateAuthorizationRequestResponse
+
+    get:
       summary: Get authorization session status
       operationId: get-authorization-status
       description: |
         Checks the current status of an Authorization Request session. Can optionally include verified credential data 
-        in the response when the status is 'verified'. Although the correlationId should be the only one strictly necesary we require both the queryId and correlationId, to keep the create response and auth request symmetrical and to not assume global sessions accross different queryIds in RP implementations.
+        in the response when the status is 'verified'.
       tags:
         - Backend
-      requestBody:
-        $ref: '#/components/requestBodies/AuthorizationStatusRequestBody'
+
       responses:
         '200':
           description: Authorization status retrieved successfully
@@ -145,7 +124,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+    delete:
+      summary: Remove authorization request state
+      operationId: delete-authorization-request
+      description: Deletes all state associated with an authorization request. Use for cleanup after completion or timeout.
+      tags:
+        - Backend
+      responses:
+        '204':
+          description: Authorization request state removed successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Query Id or other param not configured/found on the RP agent side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Error creating authorization request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     bearerAuth:
@@ -194,34 +199,11 @@ components:
                     - authorization_request_retrieved
                     - authorization_response_verified
                     - error
-    DeleteAuthorizationRequestBody:
-      description: Delete an authorization request. Could also be perfomred automatically depending on RP implementation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteAuthorizationRequest'
-          examples:
-            Get status:
-              value:
-                correlation_id: my-business-key-or-uuid
-                query_id: example-dcql-id
 
-    AuthorizationStatusRequestBody:
-      description: Request for current status of the session
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationStatusRequest'
-          examples:
-            Get status:
-              value:
-                correlation_id: my-business-key-or-uuid
-                query_id: example-dcql-id
-  
   schemas:
     CreateAuthorizationRequest:
       type: object
-      required: [query_id, client_id]
+      required: [query_id]
       properties:
         correlation_id:
           type: string
@@ -231,6 +213,11 @@ components:
           type: string
           description: Identifier for the query (DCQL or PE)
           example: example-dcql-id
+        request_base_uri:
+          type: string
+          description: The base URI to be used for request URIs. Defaults to "oidp4vp://". It is mainly useful for web/organizational wallets that have an https:// URI for OID4VP
+          example: https://example.wallet.com
+          default: oid4vp://
         request_uri_method:
           $ref: '#/components/schemas/RequestUriMethod'
         client_id:
@@ -303,6 +290,8 @@ components:
           type: string
           description: Unique identifier for the authentication session
           example: 2cc29d1c-7d00-46f8-b0ae-b4779d2ff143
+        base_uri:
+
         query_id:
           type: string
           description: Identifier for the DCQL/PE query that specifies the requested Digital Credentials
