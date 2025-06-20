@@ -290,8 +290,6 @@ components:
           type: string
           description: Unique identifier for the authentication session
           example: 2cc29d1c-7d00-46f8-b0ae-b4779d2ff143
-        base_uri:
-
         query_id:
           type: string
           description: Identifier for the DCQL/PE query that specifies the requested Digital Credentials

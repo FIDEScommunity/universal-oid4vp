@@ -11,7 +11,7 @@ Overview of websites that use the Universal OID4VP API to connect to an organiza
 
 
 ## Plugins
-Overview of plugins for different plaforms that use the Universal OID4VP API to integrate any compliant organizational wallet in that platform (web contentent management platform, SaaS platform, eCommerce platform, ERP platform, App builder platform etc):
+Overview of plugins for different platforms that use the Universal OID4VP API to integrate any compliant organizational wallet in that platform (web contentent management platform, SaaS platform, eCommerce platform, ERP platform, App builder platform etc):
 - Wordpress
 
 ## Organizational Wallet - Verifier examples

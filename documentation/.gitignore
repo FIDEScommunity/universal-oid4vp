@@ -22,3 +22,4 @@ yarn-error.log*
 /docs/LICENSE.md
 /docs/openapi.yaml
 /docs/README.md
+/static/swagger/

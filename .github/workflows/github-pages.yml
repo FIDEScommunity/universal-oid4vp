@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - feature/new_layout
+      - feature/swagger-ui
   workflow_dispatch: # Allows manual trigger of the workflow in GitHub Actions UI
 
 permissions:

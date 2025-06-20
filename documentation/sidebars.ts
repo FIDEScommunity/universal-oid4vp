@@ -19,11 +19,11 @@ const sidebars: SidebarsConfig = {
             id: 'universal-oid4vp-introduction', // Refers to documentation/docs/universal-oid4vp-introduction.md
             label: 'Introduction',
         },
-      /* {
-            type: 'doc',
-            id: 'README', // Refers to documentation/docs/readme.md
-            label: 'Readme',
-        },*/
+        /* {
+              type: 'doc',
+              id: 'README', // Refers to documentation/docs/readme.md
+              label: 'Readme',
+          },*/
         {
             type: 'doc',
             id: 'implementation-examples',
@@ -36,11 +36,19 @@ const sidebars: SidebarsConfig = {
                 type: "generated-index",
                 title: "Universal OID4VP API",
                 description:
-                    "This is a sample server Petstore server. You can find out more about Swagger at http://swagger.io or on irc.freenode.net, #swagger. For this sample, you can use the api key special-key to test the authorization filters.",
+                    "This section is intended for developers and describes the actual REST API endpoints",
                 slug: "/category/openapi",
             },
-            items: openapiSidebar,
-        }
+            items: [{
+                type: 'link',
+                href: '/universal-oid4vp/swagger/index.html',
+                label: 'Swagger UI',
+
+            },
+                ...openapiSidebar],
+        },
+        // TODO: Look into how to modify the automatic openapi generator to include the swagger ui
+
     ]
 };
 
