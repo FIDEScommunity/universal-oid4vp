@@ -1,0 +1,55 @@
+---
+id: developers-introduction
+title: Developers
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+## Introduction
+
+The Universal OID4VP API is a simple, standardized interface that makes it easy for websites and native apps to request and verify Verifiable Credentials — using the OpenID for Verifiable Presentations (OID4VP) standard.
+This section describes in more detail how this universal interface works.
+
+## How does it work?
+### The OpenID for VP Specification
+
+The [OpenID for Verifiable Presentations Specification](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) defines a mechanism to request and present Credentials. The specification
+defines the flow for presenting credentials between the End-User, the Wallet of the End-User and the Verifier that would like to receive information from the End-user. As an example the Cross-device flow
+is shown in the diagram below:
+
+<img src={useBaseUrl('/img/openid4vp-specs.png')} alt="OID4VP Specs Sequence Diagram" style={{ maxWidth: '100%' }} />
+
+In this flow the following steps are performed:
+1. The End-User is interacting with the Verifier website. At some point the Verifier needs some information from the End-User. The Verifier presents a QR code for the End-User to scan with his Wallet.
+1. By scanning the QR code with the Wallet, the Verifier basically sends the Wallet an Authorization Request that contains a Request URI from where to obtain the Request Object containing the parameters.
+1. The Wallet then retrieves Request Object from the Verifier using the supplied Request URI.
+1. The Verifier returns the Request Object containing requested parameters, such as a Presentation Exchange or DCQL query that describes the requirements of the Credential(s) that the Verifier is requesting to be presented. Such requirements could include what type of Credential(s), in what format(s), which individual Claims within those Credential(s) (Selective Disclosure), etc.
+1. The Wallet processes the Request Object and determines what Credentials are available matching the Verifier's request.
+1. The Wallet also authenticates the End-User and gathers her consent to present the requested Credentials.
+1. The Wallet prepares the Presentation(s) of the Credential(s) that the End-User has consented to. It then sends to the Verifier an Authorization Response with the Presentation(s).
+1. The Verifier validates the received information and acts accordingly.
+
+### In practice the situation is often different
+
+With the scenario explained above, each Verifier website needs to implement the OpenID4VP Spec and all its details, Furthermore for signing the Request Object, it would need a secure way to store its private key.
+Finally changes to the Presentation Exchange or DCQL query would require a configuration change of the Verifier website. Therefore, a Verifier website often makes use of an Organization Wallet or Agent to delegate
+this presentation request and verification. In practice the following diagram depicts more the real-world scenario:
+
+<img src={useBaseUrl('/img/openid4vp-inpractice.png')} alt="OID4VP In practice Sequence Diagram" style={{ maxWidth: '100%' }} />
+
+The difference between the previous diagram of the specification and this diagram of the real-world scenario, is exactly what the Universal OID4VP API is about. The basic idea is to
+standardize on the two API's that have not been described in the specification. By standardizing these interfaces, one plugin can be developed for each Website CMS, and all
+implementations of Organization Wallet and Agent software can work with this plugin and be used interchangeable. The interfaces are marked red in the diagram below:
+
+<img src={useBaseUrl('/img/openid4vp-nonstandard.png')} alt="OID4VP In practice Sequence Diagram" style={{ maxWidth: '100%' }} />
+
+The interfaces are given below together with the OpenAPI specification:
+
+- *[Start openid4vp](../docs/openapi/create-authorization-request)* - Creates an authorization request and starts the session.
+- *[Get status](../docs/openapi/get-authorization-status)* - Gets the status of the authorization request session.
+- *[Remove session](../docs/openapi/delete-authorization-request)* - Removes the authorization request session.
+
+## Learn more
+
+📄 Check the [OpenAPI documentation](../docs/openapi/create-authorization-request) for detailed information
+

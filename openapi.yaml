@@ -16,6 +16,8 @@ info:
 servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/4Sure/universal-oid4vp/0.1.0
+  - description: Credenco Organization Wallet
+    url: https://wallet.acc.credenco.com/api/v1
   - description: Development server
     url: http://localhost:8081
 
@@ -254,7 +256,7 @@ components:
           type: string
           description: Identifier for the presentation definition that specifies which credentials are required
           example: ExampleSdJwtId
-    
+
     AuthorizationStatusRequest:
       type: object
       required: [correlation_id, query_id]
@@ -269,7 +271,7 @@ components:
           example: ExampleSdJwtId
         verified_data:
           $ref: '#/components/schemas/VerifiedDataOpts'
-    
+
     VerifiedDataOpts:
       type: object
       properties:

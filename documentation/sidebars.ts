@@ -30,6 +30,11 @@ const sidebars: SidebarsConfig = {
             label: 'Implementation Examples',
         },
         {
+            type: 'doc',
+            id: 'developers-introduction',
+            label: 'Developers',
+        },
+        {
             type: "category",
             label: "OpenAPI",
             link: {

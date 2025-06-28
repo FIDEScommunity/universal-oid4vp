@@ -45,7 +45,7 @@ const FeatureList: FeatureItem[] = [
             <>
                 It is easy for developers to integrate their wallets, or integrate their webapps with OID4VP using OpenAPI. <Link
                     // className="button button--secondary button--lg"
-                    to="/docs/openapi/universal-oid-4-vp">
+                    to="/docs/developers-introduction">
                     Read more
                 </Link>
             </>
