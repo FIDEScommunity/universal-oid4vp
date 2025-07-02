@@ -8,6 +8,7 @@ title: Implementation Examples
 ## Relying Party website examples:
 Overview of websites that use the Universal OID4VP API to connect to an organizational wallet
 - https://circulacity.fides.community/
+- https://rotterdam.fides.community/
 
 
 ## Plugins
@@ -17,7 +18,7 @@ Overview of plugins for different plaforms that use the Universal OID4VP API to 
 ## Organizational Wallet - Verifier examples
 Overview of organizational wallets that are compliant with the Universal OID4VP API:
 - 4Sure
-- Credenco
+- [Credenco](https://wallet.acc.credenco.com/api/public/swagger-ui/index.html)
 
 
 
